@@ -19,7 +19,7 @@ One-page website for Sibylle Bürgi-Lütscher — Dipl. Wundexpertin SAfW, Liest
 - **Vite 8** + **Tailwind v4** + **Sass**
 - **i18next** (German UI, all strings in `app/locales/de.yml`)
 - **Google Maps JS API** (client-side, via `@googlemaps/js-api-loader`)
-- **pnpm 11** + **Node 24**
+- **pnpm 12** + **Node 24**
 - **Nix flakes** (devShell + reproducible OCI image, no Dockerfile)
 
 ## Two deploys, one source

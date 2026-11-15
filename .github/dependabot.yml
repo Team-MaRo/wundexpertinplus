@@ -48,7 +48,7 @@ updates:
       time: '09:30'
       timezone: Europe/Zurich
     cooldown:
-      default-days: 1 # Match pnpm 11 default minimumReleaseAge (1440 min = 1 day)
+      default-days: 1 # Match pnpm's default minimumReleaseAge (1440 min = 1 day)
     ignore:
       # Node version is pinned by hand (.nvmrc / engines.node / flake) — Dependabot
       # must not bump @types/node out from under the chosen Node major.

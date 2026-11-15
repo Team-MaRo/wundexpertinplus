@@ -226,7 +226,7 @@ For a one-off SPA build with a specific host, set `SITE_HOST=example.com SSR=fal
 - **`pnpmDeps.hash`** — every `pnpm-lock.yaml` change needs a paired hash bump in `flake.nix`.
 - **Don't reintroduce a `public/CNAME` file.** The host is resolved at build time from the Pages API (Settings → Pages → Custom domain, or the github.io project URL when none is set). Adding a checked-in `CNAME` would create two sources of truth that can drift, and GitHub Actions-mode deploys ignore the file anyway (only branch-publishing mode honors it).
 - **Favicon raster colors need inline attrs, not classes.** If you add a new element to `plaster-plus.svg`, give it a `class="brand-plaster__…"` matching one of the existing rules so the inline-styles pass picks it up. New CSS classes without corresponding rules in the SVG's `<style>` block will rasterise black.
-- **pnpm via Corepack** on host/CI. Production image bypasses Corepack — uses `pkgs.pnpm_11` at build time, ships zero pnpm at runtime.
+- **pnpm via Corepack** on host/CI. Production image bypasses Corepack — uses `pkgs.pnpm_12` at build time, ships zero pnpm at runtime.
 - **Nav `Link` hrefs must include the leading `/`** (e.g. `/#kontakt`). Bare `#kontakt` makes react-router resolve relative to the current pathname.
 - **i18n init is guarded by `isInitialized`.** Changing options in `i18n.ts` requires a full dev-server restart (HMR can't re-run init). YAML *content* changes hot-reload via the `import.meta.hot.accept` hook in the same file.
 - **Don't write `html.dark` or `html.dark &` directly in SCSS** — use `@include dark { ... }` (top-level) or `@include in-dark { ... }` (nested) so the no-JS `prefers-color-scheme` fallback selector is emitted too.
