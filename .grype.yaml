@@ -7,44 +7,10 @@
 # lands in our nixpkgs channel (currently `nixos-26.05`).
 
 ignore:
-  # CVE-2026-34182 (Critical) + CVE-2026-45447 / 9076 / 7383 / 34180 / 42764 /
-  # 34183 / 42765 / 45445 / 34181 (High) — openssl 3.6.2 issues, all fixed in
-  # openssl 3.6.3. Reported by Grype because nixos-26.05 has not yet backported
-  # the 3.6.3 release; the runtime closure still ships 3.6.2.
-  #
-  # Why ignored:
-  #   - openssl is in the image for two consumers only:
-  #       1. `curlSlim` (flake.nix `pkgs.curl.override`), which backs the OCI
-  #          HEALTHCHECK CMD `curl -fsS http://localhost:3000/`. That call is
-  #          plain HTTP to a literal localhost URL — no TLS handshake, and no
-  #          attacker influence over arguments, protocol, headers, or response
-  #          body. curlSlim further disables scp, gss, psl, brotli, zstd, ldap,
-  #          rtmp, http3 and websocket support, removing most of the surface
-  #          openssl-adjacent curl CVEs target.
-  #       2. node's TLS stack. The server listens on plain HTTP :3000 (TLS is
-  #          terminated by an upstream proxy in real deployments), so there is
-  #          no attacker-facing TLS *server* surface; node's openssl is only
-  #          exercised for outbound HTTPS the app itself initiates against
-  #          trusted endpoints.
-  #   - The container runs as `nonroot:65532` with :3000 as the only advertised
-  #     ingress.
-  #
-  # Remove these entries when nixos-26.05 backports openssl 3.6.3+. Check via:
-  #   nix eval --raw github:NixOS/nixpkgs/nixos-26.05#openssl.version
-  - vulnerability: CVE-2026-34182
-  - vulnerability: CVE-2026-45447
-  - vulnerability: CVE-2026-9076
-  - vulnerability: CVE-2026-7383
-  - vulnerability: CVE-2026-34180
-  - vulnerability: CVE-2026-42764
-  - vulnerability: CVE-2026-34183
-  - vulnerability: CVE-2026-42765
-  - vulnerability: CVE-2026-45445
-  - vulnerability: CVE-2026-34181
-
-  # CVE-2026-11822 / CVE-2026-11824 (High) — sqlite 3.51.2 issues, both fixed
-  # in sqlite 3.53.2. Reported by Grype because nixos-26.05 has not yet
-  # backported the 3.53.2 release; the runtime closure still ships 3.51.2.
+  # CVE-2026-119373 / CVE-2026-119374 / CVE-2026-119379 (High) — sqlite
+  # 3.53.3 issues, all fixed in sqlite 3.54.0. Reported by Grype because
+  # nixos-26.05 has not yet backported the 3.54.0 release; the runtime closure
+  # still ships 3.53.3.
   #
   # Why ignored:
   #   - The application does not import `node:sqlite`, never opens a database,
@@ -55,7 +21,8 @@ ignore:
   #     statically links sqlite into the `node` binary, so the standalone
   #     sqlite shared library is never loaded at runtime.
   #
-  # Remove these entries when nixos-26.05 backports sqlite 3.53.2+. Check via:
+  # Remove these entries when nixos-26.05 backports sqlite 3.54.0+. Check via:
   #   nix eval --raw github:NixOS/nixpkgs/nixos-26.05#sqlite.version
-  - vulnerability: CVE-2026-11822
-  - vulnerability: CVE-2026-11824
+  - vulnerability: CVE-2026-119373
+  - vulnerability: CVE-2026-119374
+  - vulnerability: CVE-2026-119379

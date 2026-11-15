@@ -12,6 +12,9 @@ overrides:
   # GHSA path-traversal in the dev server (esbuild >= 0.27.3 < 0.28.1); pulled
   # transitively at 0.27.3/0.27.7. Force the patched release.
   esbuild: '>=0.28.1'
+  # GHSA-g3hv-75wg-m249 ReDoS in minimatch (>= 7.0.0 < 11.0.1); pulled
+  # transitively via eslint. Force the patched release.
+  'minimatch@>=7 <11.0.1': '>=11.0.1'
 
 # `@iwf-web/tsconfig/react-strict/tsconfig.json` extends three @tsconfig/*
 # bases. tsc follows the @iwf-web/tsconfig symlink and resolves them inside
